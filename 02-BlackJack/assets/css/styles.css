@@ -1,0 +1,26 @@
+body{
+    margin: 0 auto;
+    background-color: #2F4F30;
+    color: white;
+}
+
+.title{
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding: 20px;
+    font-size: 25px;
+}
+
+.carta{
+    width: 150px;
+    /* para hacer que se superpongan */
+    position: relative;
+    left: 100px;
+    margin-left: -75px;
+}
+
+#jugador-cartas, #crupier-cartas{
+    height: 250px;
+    margin-top: 30px;
+}
