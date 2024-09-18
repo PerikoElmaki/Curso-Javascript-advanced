@@ -12,9 +12,9 @@
     const tipos      = ['C', 'D', 'H', 'S'],
           especiales = ['A', 'Q','J','K'];
 
-    // let puntosJugador = 0,
-    //     puntosCrupier = 0;
-    let puntosJugadores = [];
+     let puntosJugador = 0,
+        puntosCrupier = 0;
+    // let puntosJugadores = [];
 
     // Referencias de html 
     const   btnPedir         = document.querySelector('#btnPedir'),
