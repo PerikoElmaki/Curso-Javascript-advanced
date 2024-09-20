@@ -1,9 +1,10 @@
 
 //  Función anónima autoinvocada, usamos
 (function() {
-    // CUando unsamos función anónima, usamos el strict (restricciones al código para que sea seguro)
+    // CUando unsamos función anónima, usamos el strict (restricciones al código para que sea seguro), BUENAS PRACTICAS
     'use strict'
-    // A partir de aqui, está el código del programa
+    // DAría error si no declaramos variables. 
+    
     
     
     // creamos deck de cartas 
