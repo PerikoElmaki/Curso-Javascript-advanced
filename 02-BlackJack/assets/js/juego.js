@@ -1,8 +1,8 @@
 
 //  Función anónima autoinvocada, usamos
-(() => {
+const moduloJuego = (() => {
     // CUando unsamos función anónima, usamos el strict (restricciones al código para que sea seguro), BUENAS PRACTICAS
-    'use strict'
+    'use strict';
     // DAría error si no declaramos variables. 
 
 
@@ -29,12 +29,22 @@
     const inicializarJuego = (numJugadores = 2) => {
         deck = crearDeck();
 
+        puntosJugadores = [];
         /*EN el array puntosJugadores, vamos a añadir posiciones con valor 0
             que indican el número de jugadores*/
         for (let i = 0; i < numJugadores; i++) {
             puntosJugadores.push(0);
         }
+        // por cada punto vaciamos el html, por cada div igual
+        // Para reiniciar el juego en el html
+        puntosHTML.forEach( punto => punto.innerText = 0);
+        divCartasJugadores.forEach( div => div.innerHTML = '');
 
+        btnPedir.disabled = false;
+        btnDetener.disabled = false;
+  
+        
+      
     }
 
     const crearDeck = () => {
@@ -111,31 +121,13 @@
 
 
     }
-    const turnoPC = (puntosMinimos) => {
-        let puntosCrupier = 0;
-        do {
-            const carta = pedirCarta();
-            // La última posicion de puntosjugador  es el pc
-            puntosCrupier = acumularPuntos(carta, puntosJugadores.length - 1);
-            crearCarta(carta, puntosJugadores.length - 1);
-            // // mostramos carta
-            // const imgCarta = document.createElement('img');
-            // imgCarta.src = `assets/cartas/cartas/${carta}.png`;  //esto coge el nombre de la carta y busca imagen
-            // // añadimos imgCarta a la clase de css
-            // imgCarta.classList.add('carta');
-            // divCartasCrupier.append(imgCarta);
 
-            // si esmayor a 21 ya ha perdido. terminamos
-            if (puntosMinimos > 21) {
-                break;
-            }
-
-        } while ((puntosCrupier < puntosMinimos) && (puntosMinimos <= 21));
+    const determinarGanador = () => {
+        // Array de puntos de cada jugador
+        const [ puntosMinimos, puntosCrupier ] = puntosJugadores;
 
         setTimeout(() => {
-
-
-            if (puntosCrupier === puntosMinimos) {
+            if ( puntosCrupier === puntosMinimos ) {
                 alert('Nadie gana');
             } else if (puntosMinimos > 21) {
                 alert('Crupier gana gay');
@@ -144,7 +136,28 @@
             } else
                 alert('Crupier gana');
 
-        }, 20);
+        }, 100);
+
+    }
+    const turnoPC = (puntosMinimos) => {
+        let puntosCrupier = 0;
+        do {
+            const carta = pedirCarta();
+            // La última posicion de puntosjugador  es el pc
+            puntosCrupier = acumularPuntos(carta, puntosJugadores.length - 1);
+            crearCarta(carta, puntosJugadores.length - 1);
+          
+
+            // si esmayor a 21 ya ha perdido. terminamos
+            if (puntosMinimos > 21) {
+                break;
+            }
+
+        } while ((puntosCrupier < puntosMinimos) && (puntosMinimos <= 21));
+
+        // llamamos a determinar ganador 
+        determinarGanador();
+
     }
 
     // ++++++++++EVENTOS +++++++++++++
@@ -175,25 +188,17 @@
     btnDetener.addEventListener('click', () => {
         btnPedir.disabled = true;
         btnDetener.disabled = true;
-        turnoPC(puntosJugador);
+
+        turnoPC(puntosJugadores[0]);
     })
 
-    btnNuevoJuego.addEventListener('click', () => {
-        inicializarJuego();
-        btnPedir.disabled = false;
-        btnDetener.disabled = false;
-        // vaciamos deck 
-        deck = [];
-        deck = crearDeck();
-        // Hay que reiniciar todos los puntos 
-        // puntosJugador = 0;
-        // puntosCrupier = 0;    
-        puntosHTML[0].innerText = 0;
-        puntosHTML[1].innerText = 0;
+    
 
-       
-       
+    // Vamos a hacer visible una función (publica) con el return de la función anónima, 
+    // Por si necesitan llamar a inicializarJuego desde HTML 
+    // POO, solo es visible para el DOM lo que devuelve la función, no todo lo demás
 
-    })
-
+    return {
+         nuevoJuego: inicializarJuego
+    }
 })();
